@@ -27,8 +27,10 @@ Introduce la descripción de la tarea</textarea
       <label for="fecha">Fecha límite</label>
       <input id="fecha" type="datetime-local" v-model="date" required />
       <div class="buttons_container">
-        <button @click="clean()">Cancelar</button>
-        <button @click="save()" :disabled="isDisabled">Guardar</button>
+        <button @click="clean()" class="btn cancel">Cancelar</button>
+        <button @click="save()" :disabled="isDisabled" class="btn save">
+          Guardar
+        </button>
       </div>
     </div>
     <Success :title="lastTask" v-if="saved" />
@@ -117,5 +119,31 @@ label {
   flex-direction: row;
   justify-content: space-around;
   margin-top: 1rem;
+}
+
+.btn {
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: no-drop;
+}
+
+.save {
+  background-color: #04aa6d;
+}
+.save:hover:active {
+  background-color: #46a049;
+}
+
+.cancel {
+  background-color: #f44336;
+}
+.cancel:hover {
+  background: #da190b;
 }
 </style>
