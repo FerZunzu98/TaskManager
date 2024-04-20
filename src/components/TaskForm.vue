@@ -28,7 +28,7 @@
       </select>
 
       <label for="fecha">Fecha límite</label>
-      <input id="fecha" type="datetime-local" v-model="date" required />
+      <input id="fecha" type="datetime-local" v-model="deadline" required />
       <div class="buttons_container">
         <button @click="clean()" class="btn cancel">Cancelar</button>
         <button @click="save()" :disabled="isDisabled" class="btn save">
@@ -55,7 +55,7 @@ export default {
       title: "",
       description: "",
       category: "",
-      date: null,
+      deadline: null,
       saved: false,
       lastTask: "",
     };
@@ -67,7 +67,7 @@ export default {
         title: this.title,
         description: this.description,
         category: this.category,
-        date: this.date,
+        deadline: this.deadline,
         id: uuid.v4(),
         completed: false,
       };
@@ -81,7 +81,7 @@ export default {
       (this.title = ""),
         (this.description = ""),
         (this.category = ""),
-        (this.date = null);
+        (this.deadline = null);
     },
   },
   computed: {
@@ -96,7 +96,9 @@ export default {
         return true;
       }
 
-      return !this.title || !this.description || !this.category || !this.date;
+      return (
+        !this.title || !this.description || !this.category || !this.deadline
+      );
     },
   },
 };
