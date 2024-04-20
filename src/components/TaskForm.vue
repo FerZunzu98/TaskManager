@@ -12,14 +12,17 @@
       />
 
       <label for="description">Descripción</label>
-      <textarea id="description" v-model="description" required>
-Introduce la descripción de la tarea</textarea
-      >
+      <textarea
+        id="description"
+        v-model="description"
+        required
+        placeholder="Introduce la descripcion"
+      ></textarea>
 
       <label for="category">Categoría</label>
       <select id="category" v-model="category" required>
         <option value="Personal">Personal</option>
-        <option value="Trabajo" selected>Trabajo</option>
+        <option value="Trabajo">Trabajo</option>
         <option value="Estudio">Estudio</option>
         <option value="Otros">Otros</option>
       </select>
@@ -40,6 +43,8 @@ Introduce la descripción de la tarea</textarea
 <script>
 import { mapActions } from "vuex";
 import Success from "@/components/Success.vue";
+import { uuid } from "vue3-uuid";
+
 export default {
   name: "TaskForm",
   components: {
@@ -63,6 +68,8 @@ export default {
         description: this.description,
         category: this.category,
         date: this.date,
+        id: uuid.v4(),
+        completed: false,
       };
 
       this.addTask(task);
