@@ -7,6 +7,18 @@
   <router-view />
 </template>
 
+<script>
+import { mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapActions(["loadTaskFromLocalStorage"]),
+  },
+  mounted() {
+    this.loadTaskFromLocalStorage();
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
