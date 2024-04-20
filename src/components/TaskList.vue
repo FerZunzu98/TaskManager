@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isEmpty">
+    <div>
       <div>
         <h2>Tarenas no completadas</h2>
         <div v-if="!isIncompletedEmpty">
@@ -19,9 +19,15 @@
           <Empty msg="Completadas" />
         </div>
       </div>
-    </div>
-    <div v-else>
-      <Empty />
+      <div>
+        <h2>Tareas de los últimos 7 días</h2>
+        <div v-if="!isServerTasksEmpty">
+          <Task v-for="task of serverTasks" :key="task.id" :task="task" />
+        </div>
+        <div v-else>
+          <Empty msg="ultimos 7 dias" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -30,7 +36,6 @@
 import { mapGetters, mapState } from "vuex";
 import Empty from "@/components/Empty.vue";
 import Task from "@/components/Task.vue";
-import api from "@/services/api";
 
 export default {
   name: "TaskList",
@@ -39,10 +44,10 @@ export default {
     Task,
   },
   computed: {
-    ...mapState(["tasks"]),
+    ...mapState(["tasks", "serverTasks"]),
     ...mapGetters(["completed", "incompleted"]),
-    isEmpty() {
-      return this.tasks.length === 0;
+    isServerTasksEmpty() {
+      return this.serverTasks.length === 0;
     },
     isCompletedEmpty() {
       return this.completed.length === 0;
@@ -50,9 +55,6 @@ export default {
     isIncompletedEmpty() {
       return this.incompleted.length === 0;
     },
-  },
-  mounted() {
-    api.getTasks().then((tasks) => console.log(tasks));
   },
 };
 </script>

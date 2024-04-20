@@ -11,10 +11,11 @@
 import { mapActions } from "vuex";
 export default {
   methods: {
-    ...mapActions(["loadTaskFromLocalStorage"]),
+    ...mapActions(["loadTaskFromLocalStorage", "loadFromServer"]),
   },
   mounted() {
     this.loadTaskFromLocalStorage();
+    this.loadFromServer();
   },
 };
 </script>

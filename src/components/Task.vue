@@ -3,19 +3,30 @@
     <p>Título: {{ task.title }}</p>
     <p>Descripción: {{ task.description }}</p>
     <p>Categoría: {{ task.category }}</p>
-    <p>Fecha límite: {{ task.date }}</p>
+    <p>Fecha límite: {{ task.deadline }}</p>
     <div>
-      <button>Modificar</button>
-      <button>Eliminar</button>
+      <button v-if="!task.completed" @click="complete()">Completar</button>
+      <button @click="delTask()">Eliminar</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Task",
   props: {
     task: Object,
+  },
+  methods: {
+    ...mapActions(["completeTask", "deleteTask"]),
+    complete() {
+      this.completeTask(this.task);
+    },
+    delTask() {
+      this.deleteTask(this.task);
+    },
   },
 };
 </script>
