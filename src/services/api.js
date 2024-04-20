@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const apiclient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/tasks/",
+  baseURL: "http://127.0.0.1:8000/api/",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -12,6 +12,6 @@ const apiclient = axios.create({
 
 export default {
   getTasks() {
-    return apiclient.get("/");
+    return apiclient.get("/last_seven_days_completed_tasks/");
   },
 };
