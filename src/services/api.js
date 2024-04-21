@@ -14,4 +14,17 @@ export default {
   getTasks() {
     return apiclient.get("/last_seven_days_completed_tasks/");
   },
+  deleteTask(id) {
+    return apiclient.delete(`/tasks/${id}`);
+  },
+  createTask(task) {
+    return apiclient.post(`/tasks/`, task);
+  },
+  updateTask(task) {
+    console.log(JSON.stringify(task));
+    return apiclient.patch(`/tasks/${task.id}/`, JSON.stringify(task));
+  },
+  getAllTasks() {
+    return apiclient.get("/tasks/");
+  },
 };

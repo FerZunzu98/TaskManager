@@ -34,16 +34,38 @@ export default createStore({
     LOAD_TASKS_FROM_SERVER(state, tasks) {
       state.serverTasks = tasks;
     },
+    LOAD_INCOMPLETED_TASKS(state, tasks) {
+      state.tasks = tasks;
+    },
     COMPLETE_TASK(state, task) {
       const finded = state.tasks.find((element) => element.id == task.id);
       if (finded) {
         finded.completed = true;
       }
+      state.serverTasks.push(finded);
+      localStorage.setItem("tasks", JSON.stringify(state.tasks));
+    },
+    DELETE_TASK_FROM_SERVER(state, task) {
+      if (task.completed) {
+        state.serverTasks = state.serverTasks.filter(
+          (element) => element.id !== task.id
+        );
+      } else {
+        state.tasks = state.tasks.filter((element) => element.id !== task.id);
+      }
+    },
+    DELETE_LOCAL_TASK(state, task) {
+      state.tasks = state.tasks.filter((element) => element.id !== task.id);
+      localStorage.setItem("tasks", JSON.stringify(state.tasks));
     },
   },
   actions: {
     addTask({ commit }, task) {
-      commit("ADD_TASK", task);
+      api.createTask(JSON.stringify(task)).then((response) => {
+        task.id = response.data.id;
+
+        commit("ADD_TASK", task);
+      });
     },
     loadTaskFromLocalStorage({ commit }) {
       commit("LOAD_TASKS_FROM_LOCALSTORAGE");
@@ -62,8 +84,28 @@ export default createStore({
         commit("LOAD_TASKS_FROM_SERVER", toSave);
       });
     },
+    loadIncompletedTasks({ commit }) {
+      api.getAllTasks().then((response) => {
+        const tasks = response.data;
+
+        const toSave = tasks.map((task) => {
+          return {
+            ...task,
+            fromServer: true,
+          };
+        });
+
+        commit("LOAD_INCOMPLETED_TASKS", toSave);
+      });
+    },
     completeTask({ commit }, task) {
-      commit("COMPLETE_TASK", task);
+      task.completed = true;
+
+      api.updateTask(task).then((response) => {
+        if (response.status === 200) {
+          commit("COMPLETE_TASK", task);
+        }
+      });
     },
     deleteTask({ dispatch }, task) {
       if (task.fromServer) {
@@ -72,13 +114,19 @@ export default createStore({
         dispatch("deletelocalTask", task);
       }
     },
-    // deleteTaskFromServer({commit},task){
-    //   //Funcion para eliminar la task del servidor
-    // },
-    // deletelocalTask({commit},task){
-    //   //Funcion para eliminar la task local
+    deleteTaskFromServer({ commit }, task) {
+      //Funcion para eliminar la task del servidor
+      api.deleteTask(task.id).then((response) => {
+        if (response.status === 204) {
+          commit("DELETE_TASK_FROM_SERVER", task);
+        }
+      });
+    },
 
-    // },
+    deletelocalTask({ commit }, task) {
+      //Funcion para eliminar la task local
+      commit("DELETE_LOCAL_TASK", task);
+    },
   },
   modules: {},
 });

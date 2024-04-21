@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <router-link :to="{ name: 'home' }">Home</router-link> |
+    <router-link :to="{ name: 'home' }">Task List</router-link> |
     <router-link to="/newtask">New task</router-link>
   </nav>
   <!-- Aqui se renderizan las rutas -->
@@ -11,11 +11,16 @@
 import { mapActions } from "vuex";
 export default {
   methods: {
-    ...mapActions(["loadTaskFromLocalStorage", "loadFromServer"]),
+    ...mapActions([
+      "loadTaskFromLocalStorage",
+      "loadFromServer",
+      "loadIncompletedTasks",
+    ]),
   },
   mounted() {
     this.loadTaskFromLocalStorage();
     this.loadFromServer();
+    this.loadIncompletedTasks();
   },
 };
 </script>
