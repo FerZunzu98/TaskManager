@@ -4,13 +4,17 @@
 Esta la puede encontrar en el seguiente repositorio: https://github.com/FerZunzu98/TaskManager_backend.git
 Vaya y configure la parte de servidor siguiente las instrucciones descritas en el README.md de dicho repositorio. 
 
-### Paso1
+### Paso 1
 
-Instale las libreias necesarias, especificadas en el package.json => npm install
+Descargar o clonar el proyecto
 
-### Paso2
+### Paso 2
 
-Compile el proyecto => npm run serve
+Instalar las libreias necesarias, especificadas en el package.json => npm install
+
+### Paso 3
+
+Compilar el proyecto => npm run serve
 
 **La dirección configurada a la base de datos es la por defecto en Djando, en caso de que la haya modificado <br>
 deberá especificar la nueva ruta en el archivo: src/services/api.js, en la variable baseUrl
