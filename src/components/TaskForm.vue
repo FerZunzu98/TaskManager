@@ -9,6 +9,7 @@
         placeholder="Título"
         v-model="title"
         required
+        class="input"
       />
 
       <label for="description">Descripción</label>
@@ -28,7 +29,16 @@
       </select>
 
       <label for="fecha">Fecha límite</label>
-      <input id="fecha" type="datetime-local" v-model="deadline" required />
+      <input
+        id="fecha"
+        type="datetime-local"
+        :max="min"
+        v-model="deadline"
+        required
+      />
+      <div v-if="validateDate">
+        <label>La fecha debe ser mayor a la actual</label>
+      </div>
       <div class="buttons_container">
         <button @click="clean()" class="btn cancel">Cancelar</button>
         <button @click="save()" :disabled="isDisabled" class="btn save">
@@ -43,7 +53,6 @@
 <script>
 import { mapActions } from "vuex";
 import Success from "@/components/Success.vue";
-import { uuid } from "vue3-uuid";
 
 export default {
   name: "TaskForm",
@@ -58,6 +67,7 @@ export default {
       deadline: null,
       saved: false,
       lastTask: "",
+      min: new Date(),
     };
   },
   methods: {
@@ -68,7 +78,6 @@ export default {
         description: this.description,
         category: this.category,
         deadline: this.deadline,
-        id: uuid.v4(),
         completed: false,
       };
 
@@ -96,9 +105,25 @@ export default {
         return true;
       }
 
+      const fechaIngresada = new Date(this.deadline).getTime();
+      const fechaActual = new Date().getTime();
+
+      if (fechaIngresada <= fechaActual) {
+        return true;
+      }
+
       return (
         !this.title || !this.description || !this.category || !this.deadline
       );
+    },
+    validateDate() {
+      const fechaIngresada = new Date(this.deadline).getTime();
+      const fechaActual = new Date().getTime();
+
+      if (fechaIngresada <= fechaActual) {
+        return true;
+      }
+      return false;
     },
   },
 };
@@ -116,11 +141,16 @@ export default {
 .form_container {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  background-color: #e7e9eb;
+  border-radius: 10px;
 }
 label {
   width: 20%;
   text-align: left;
+  padding: 5px;
 }
 
 .buttons_container {
@@ -128,6 +158,37 @@ label {
   flex-direction: row;
   justify-content: space-around;
   margin-top: 1rem;
+}
+textarea {
+  width: 80%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+select {
+  width: 80%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+input[type="datetime-local"] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
 
 .btn {
