@@ -2,6 +2,7 @@
 import axios from "axios";
 
 const apiclient = axios.create({
+  //direccion a la base de datos
   baseURL: "http://127.0.0.1:8000/api/",
   withCredentials: false,
   headers: {
@@ -10,6 +11,7 @@ const apiclient = axios.create({
   },
 });
 
+//Peticiones a mi backed Django
 export default {
   getTasks() {
     return apiclient.get("/last_seven_days_completed_tasks/");

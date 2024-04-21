@@ -37,13 +37,11 @@ export default {
     Task,
   },
   computed: {
-    ...mapState(["tasks", "serverTasks", "incompletedTasks"]),
+    ...mapState(["tasks", "serverTasks"]),
     ...mapGetters(["completed", "incompleted"]),
+    //Compruevo si hay tareas para cargar el componente Empty
     isServerTasksEmpty() {
       return this.serverTasks.length === 0;
-    },
-    isCompletedEmpty() {
-      return this.completed.length === 0;
     },
     isIncompletedEmpty() {
       return this.incompleted.length === 0;

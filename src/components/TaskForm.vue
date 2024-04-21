@@ -60,6 +60,7 @@ export default {
     Success,
   },
   data() {
+    //Variables del formulario
     return {
       title: "",
       description: "",
@@ -72,6 +73,7 @@ export default {
   },
   methods: {
     ...mapActions(["addTask"]),
+    //Funcion para guardar la tarea
     save() {
       const task = {
         title: this.title,
@@ -80,12 +82,14 @@ export default {
         deadline: this.deadline,
         completed: false,
       };
-
+      //llamo al actions de Vuex para guardar en servidor
+      //y actualizar el estado
       this.addTask(task);
       this.lastTask = task.title;
       this.saved = true;
       this.clean();
     },
+    //Vacio el formulario para agregar una nueva tarea
     clean() {
       (this.title = ""),
         (this.description = ""),
@@ -100,7 +104,7 @@ export default {
       if (this.title.length < 5) {
         return true;
       }
-
+      //Valido que la descripcion no sea demasiado corta
       if (this.description.length < 10) {
         return true;
       }
@@ -108,6 +112,7 @@ export default {
       const fechaIngresada = new Date(this.deadline).getTime();
       const fechaActual = new Date().getTime();
 
+      //Valido que la fecha para activar el boton
       if (fechaIngresada <= fechaActual) {
         return true;
       }
@@ -116,6 +121,7 @@ export default {
         !this.title || !this.description || !this.category || !this.deadline
       );
     },
+    //Valido la fecha que me estan pasando
     validateDate() {
       const fechaIngresada = new Date(this.deadline).getTime();
       const fechaActual = new Date().getTime();

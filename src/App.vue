@@ -9,16 +9,13 @@
 
 <script>
 import { mapActions } from "vuex";
+
 export default {
   methods: {
-    ...mapActions([
-      "loadTaskFromLocalStorage",
-      "loadFromServer",
-      "loadIncompletedTasks",
-    ]),
+    ...mapActions(["loadFromServer", "loadIncompletedTasks"]),
   },
   mounted() {
-    this.loadTaskFromLocalStorage();
+    //Funciones para cargar la informacion al iniciar la página
     this.loadFromServer();
     this.loadIncompletedTasks();
   },

@@ -23,12 +23,13 @@ export default {
     task: Object,
   },
   methods: {
-    ...mapActions(["completeTask", "deleteTask"]),
+    ...mapActions(["completeTask", "deleteTaskFromServer"]),
+    //Funciones botones, para marcar como completo y eliminar
     complete() {
       this.completeTask(this.task);
     },
     delTask() {
-      this.deleteTask(this.task);
+      this.deleteTaskFromServer(this.task);
     },
   },
 };
