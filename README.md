@@ -10,11 +10,11 @@ Descargar o clonar el proyecto
 
 ### Paso 2
 
-Instalar las libreias necesarias, especificadas en el package.json => npm install
+Instalar las libreias necesarias, especificadas en el package.json => `npm install`
 
 ### Paso 3
 
-Compilar el proyecto => npm run serve
+Compilar el proyecto => `npm run serve`
 
 > [!NOTE]
 > La dirección configurada a la base de datos es la por defecto en Djando, en caso de que la haya modificado <br>
