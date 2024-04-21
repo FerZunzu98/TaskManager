@@ -1,7 +1,7 @@
 # Taskmanager_client
 
 -Para el correcto funcionamiento de esta aplicación es necesario tener configurada la parde del servidor. 
-Esta la puede encontrar en el seguiente repositorio: https://github.com/FerZunzu98/TaskManager_backend.git <br>
+Esta la puede encontrar en el siguiente repositorio: https://github.com/FerZunzu98/TaskManager_backend.git <br>
 Vaya y configure la parte de servidor siguiendo las instrucciones descritas en el README.md de dicho repositorio. 
 
 ### Paso 1
